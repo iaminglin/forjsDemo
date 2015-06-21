@@ -17,12 +17,12 @@ var static = require('./bin/static');
 
 var app = new App();
 app.use(static(__dirname+"/views"));
-app.get(function (req,res) {
+app.get("/gettest",function (req,res) {
     res.write("this is get method");
     res.end();
 });
 
-app.post(function (req,res) {
+app.post("/posttest",function (req,res) {
     res.write("this is post method");
     res.end();
 });
