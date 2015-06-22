@@ -9,12 +9,11 @@ module.exports = function static(parent_path){
     return function(req,res,next){
         var path = urlpath(req.url);
         fs.readFile(parent_path+path, function (err,data) {
-            if(err)
-                next();
-            else{
+            if(!err){
                 res.write(data);
                 res.end();
             }
+           next();
         })
     }
 }

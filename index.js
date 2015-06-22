@@ -1,6 +1,7 @@
 
 var App = require('./bin/App');
 var static = require('./bin/static');
+var query = require('./bin/query');
 //exports.App = app;
 //exports.static = static;
 
@@ -17,10 +18,20 @@ var static = require('./bin/static');
 
 var app = new App();
 app.use(static(__dirname+"/views"));
+app.use(query);
 app.get("/gettest",function (req,res) {
-    res.write("this is get method");
+    res.write("this is get method"+req.query.name,req.query.id);
     res.end();
 });
+
+app.get("/gettest/*/:id/ok",function(req,res){
+    res.write("o my god");
+    res.end();
+})
+app.get("/gettest/:name/:age",function(req,res){
+    res.write("name:"+req.params.name+"\n age:"+req.params.age);
+    res.end();
+})
 
 app.post("/posttest",function (req,res) {
     res.write("this is post method");
