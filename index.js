@@ -2,25 +2,15 @@
 var App = require('./bin/App');
 var static = require('./bin/static');
 var query = require('./bin/query');
-//exports.App = app;
-//exports.static = static;
+var post = require('./bin/post');
 
-//var app = new App();
-//var app2 = new App();
-//var module1 = require('./module1');
-//var module2 = require('./module2');
-//app.use(module1);
-//app.use(module2);
-//app2.use(module1);
-//app2.use(module2);
-//app.listen(3000);
-//app2.listen(3001);
 
 var app = new App();
 app.use(static(__dirname+"/views"));
 app.use(query);
+app.use(post);
 app.get("/gettest",function (req,res) {
-    res.write("this is get method"+req.query.name,req.query.id);
+    res.write("this is get method"+req.query.name+" "+ req.query.id);
     res.end();
 });
 
@@ -34,8 +24,24 @@ app.get("/gettest/:name/:age",function(req,res){
 })
 
 app.post("/posttest",function (req,res) {
-    res.write("this is post method");
-    res.end();
+    var fs = require('fs');
+    fs.writeFile(__dirname+"/public/file.txt",req.files.txt,function(err){
+        if(err)
+            console.log(err)
+        res.write("ok");
+        res.end();
+    })
 });
+
+//app.post("/posttest", function (req,res) {
+//    var body_data = "";
+//    req.on("data", function (chunk) {
+//        body_data+=chunk;
+//    })
+//    req.on("end", function () {
+//        var contextType = req.headers["context-type"];
+//        console.log(req.headers)
+//    })
+//})
 
 app.listen(3000);
