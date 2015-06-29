@@ -1,12 +1,66 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Hello Lin</title>
+    <title>Blog</title>
 </head>
 <body>
-    <hr>
-    <b>have a good project</b>
-    <hr>
+    <header>
+        <div id="top_bar">
+            <% if(locals.islogined){%>
+            <a href="/create">写文章</a>
+            <a href="/type/manage">类别管理</a>
+            <a href="/logout">退出</a>
+            <%}else{%>
+            <a href="/login">登录</a>
+            <%}%>
+        </div>
+        <h1>My Blog</h1>
+    </header>
+    <div id="content">
+        <section>
+            <h3>文章类别</h3>
+            <ul>
+                <%if(locals.islogined){%>
+                <%locals.types.forEach(function(type){%>
+                <li><a href="/?type=<%=type.id%>"><%=type.title%></a> </li>
+                <%})%>
+                <li><a href="/">查询所有</a></li>
+                <%}%>
+            </ul>
+        </section>
+        <section>
+            <h3>博客文章</h3>
+            <ul>
+                <%if(locals.islogined){%>
+                <% locals.articles.forEach(function(art){%>
+                <li>
+                    <header>
+                        <h4><a  href="/article/<%=art.id%>"><%=art.title%></a></h4>
+                        <% var date = new Date(art.updateTime);%>
+                        <span class="time">
+                            <%= date.getFullYear()%>年
+                            <%= date.getMonth()+1%>月
+                            <%= date.getDate()%>日
+                        </span>
+                        <% if(locals.islogined){%>
+                        <div class="article_toolbar">
+                            <a href="/edit/<%=art.id%>">更改</a>
+                            <a href="/del/<%=art.id%>">删除</a>
+                        </div>
+                        <%}%>
+                    </header>
+                    <article>
+                        <%=art.content.slice(0,100)+"... ..."%>
+                    </article>
+                </li>
+                <%})%>
+                <%}%>
+            </ul>
+        </section>
+    </div>
+    <footer>
+        Lin Blog Demo
+    </footer>
 </body>
 </html>

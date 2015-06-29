@@ -33,7 +33,7 @@ function App(){
                         var pass = route_handle.route.test(path);
                         if(pass){
                             route_handle.route.paramNames.forEach(function (name,index) {
-                                req.params[name] = RegExp["$"+(index+1)];// question
+                                req.params[name] = RegExp["$"+(index+1)];// question  $1
                             })
                             handle = route_handle.handle;
                             break;
