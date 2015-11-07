@@ -83,7 +83,7 @@ module.exports = function (req,res,next) {
                             readState = 2;
                         }
                     }
-                    var end = handle(b);
+                    var end = handle(b);  //return true;
                     if (end) {
                         for (var i = 0; i < body.length;) {
                             var header = new Buffer(body[i]).toString();

@@ -38,7 +38,7 @@ module.exports = function (viewPath) {
                 }
                 buf.push(filterRN(htmlPart));
                 buf.push("return result;");
-                viewCache[fn] = new Function("locals",buf.join(""));
+                viewCache[fn] = new Function("locals",buf.join(""));//?  locals :参数 bug.join:执行函数   -》Function以字符串形式执行
             });
         })
     });
