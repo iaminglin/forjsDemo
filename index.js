@@ -25,6 +25,23 @@ app.use(session);
 app.use(view(__dirname+="/views"));
 //app.use(view(__dirname+="/testviews"));
 
+function test(){
+    ///^\/commit\/(\w+)(?:\.\.(\w+))?$/.test("/commit/adb..wert");
+    //return "1:"+RegExp.$1 +"2:"+ RegExp.$2+"3:"+RegExp.$3;
+    var path = "/img/:articleId";
+    path = path.replace(/\? (.*)$/,"")// query 内容，不再解析
+    path = path.replace(/((\*{1}(?=\/))|(\*{1}(?=$)))/g,"[0-9a-zA-Z\-_]*")//防止.* ,把＊都替换掉
+    path = path.replace(/(:(.*?(?=\/)))|(:(.*?(?=$)))/g, "([0-9a-zA-Z\-_]*)")
+    path = path.replace(/\/$/g,"")
+    path = path.replace(/\//g,"\\/")
+    var regexp = new RegExp("^"+path+"\\/?$");
+    var pass = regexp.test("/img/ID-1446818022916");
+    if(pass)
+        return RegExp["$"+(1)];
+    else
+        return "-1";
+}
+console.log("test:"+test());
 
 function isLogined(req){
     return req.session.islogined;
@@ -47,7 +64,6 @@ app.get("/", function (req,res) {
     }else{
         arts=articles;
     }
-    //var arts = articles;
     var msg = {
         islogined:isLogined(req),
         title:"My Blog",
